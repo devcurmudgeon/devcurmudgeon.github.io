@@ -4,7 +4,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>Three Times Done</title>
+    <title>People vs Processes and Tools</title>
 
     <link rel="stylesheet" href="/theme/css/normalize.css" />
     <link rel="stylesheet" href="/theme/css/foundation.min.css" />
@@ -44,101 +44,61 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="/three-times-done.html" rel="bookmark"
-        title="Permalink to Three Times Done">Three Times Done</a></h3>
+        <h3 class="article-title"><a href="/people-vs-processes-and-tools.html" rel="bookmark"
+        title="Permalink to People vs Processes and Tools">People vs Processes and Tools</a></h3>
     </header>
 
-<h6 class="subheader" title="2015-01-11T00:00:00+01:00">Sun 11 January 2015
+<h6 class="subheader" title="2017-07-10T00:00:00+02:00">Mon 10 July 2017
 </h6>
 
 
-    <p>In my experience many organisations experience systemic difficulties in getting work 'done' to an acceptable standard. The Scrum solution for this is 'agreed definition of done', which typically leads to a checklist eg</p>
-
+    <p>I recently attended a demo of a software tool for <em>requirements management</em>.
+After a few minutes showing the menus and screens, the demo became a
+presentation of a slide deck <em>about</em> the software.</p>
+<p>It turned out that the engineer demonstrating the tool does not use it himself.
+His weapon of choice for requirements management is <strong> a spreadsheet! </strong></p>
+<p><em>Do as I say, not as I do</em>.</p>
+<p>Think of all of the situations where:</p>
 <ul>
-<li>the work has been checked in to the VCS</li>
-<li>it builds ok</li>
-<li>the automated tests pass</li>
-<li>documentation exists, etc.</li>
+<li>person/team/project doesn’t follow ‘the process’ </li>
+<li>person/team/project misuses or avoids using ‘the mandated/expected toolset’</li>
 </ul>
-
-<p>That's great, assuming that infrastructure to satisfy the checklist actually exists and is stable. Often on projects we find ourselves having to create the infrastructure itself, and define/agree workable procedures relative to the specific work we need to do.</p>
-
-<p>And in an R&amp;D or services environment with lots of variance in project parameters (scale, technology, risks, scope, terms) we often struggle to nail down what 'done' actually means. </p>
-
-<p>In many cases, 'done' on a single project needs to mean different things at different times and for different types of work.</p>
-
-<p>For example, a thorough and formal 'done' with tests and documentation etc may be great for ensuring a satisfactory delivery, but it would impede prototyping to establish whether the project is feasible in the first place.</p>
-
-<p>So I'm proposing that we can explicitly consider software work in three modes:</p>
-
+<p>... which boil down to an underlying <strong>us vs them</strong> anti-pattern:</p>
 <ul>
-<li>R&amp;D</li>
-<li>ENGINEERING</li>
-<li>PRODUCTION </li>
+<li><em><strong>we</strong> are recommending/specifying the right thing, but <strong>they</strong> are doing
+the wrong thing</em></li>
 </ul>
-
-<h3>1: R&amp;D</h3>
-
-<p>(Feasibility, prototype, proof of concept, demo, hack, kludge, experiment, investigation, research)</p>
-
-<p>At this stage we want to get to a specific result, but don't really care how we get there. The emphasis is on</p>
-
+<p>Now, it seems to me there are only a few core reasons why someone would
+<em>do the wrong thing</em>:</p>
 <ul>
-<li>gaining information - can it be done? how should it be done?</li>
-<li>reducing risks</li>
-<li>providing proof, a demonstration, a video, a report</li>
-<li>collecting and documenting ideas, opportunities, obstacles, risks to help in later stages</li>
-<li>getting to the end as fast as is reasonably possible</li>
+<li>They don’t realise it is wrong: lack of experience, information, training,
+or brainpower</li>
+<li>They realise but don’t care: misaligned motivation or incentive</li>
+<li>They believe that what we  call ‘the right thing’ is actually the wrong
+thing</li>
 </ul>
-
-<p>Crucial thing to note here is that by default this type of work should typically happen in a fast, creative, cut-as-many-corners-as-we-can-to-get-there style.</p>
-
-<p>Any systems/solutions/software that we spin up for this should normally be considered to be throw-away or temporary. If a stated objective is to <em>use</em> the output in some way, that use should be noted as risky, experimental etc, since it will exploit piece of work which is ill-defined and will be of uncertain quality. </p>
-
-<p>The two key traps to avoid are</p>
-
-<p>A) management thinking that the resulting demo/POC actually does anything that can be used/sold/delivered.
-B) engineers fearing that management will want to deliver the result</p>
-
-<p>Trap A) leads to stressed engineers, and users receiving systems with fundamental design/approach flaws
-Trap B) leads to engineers wasting time and effort on things which ultimately are not required</p>
-
-<h3>2: ENGINEERING</h3>
-
-<p>(Engineered, developed, coded, tested, reviewed, signed off)</p>
-
-<p>Now we want to implement something for real. The result of this will be used by other people, so it needs to be designed properly, perform fast enough, be reliable, deal with bad user inputs etc. The output from this is expected to be some system/solution/software that the engineers believe is 'done'. </p>
-
-<p>It does the job.</p>
-
-<p>The key trap here is</p>
-
-<p>C) Management thinking that the resulting engineering solution is the end of the project. In most cases, a range of follow-on activities will be required after engineering is notionally 'complete' to get the result adopted and running for its target users. The gap may include data migration, deployment, releasing, training, soak testing, backups, user setup, security, maintenance planning etc.</p>
-
-<p>Even exceptional engineers will not have time or mental bandwidth to do these necessary things while designing and coding the solution itself.</p>
-
-<p>However we must ensure that the engineering output from this phase includes all of the notes, ideas, limitations and documentation that the team have generated getting this far, as input into what comes next...</p>
-
-<h3>3: PRODUCTION</h3>
-
-<p>(Live, in production, integrated, released, delivered, published, deployed, documented, released, validated, accepted, upstreamed, in mainline, being maintained)</p>
-
-<p>This phase is where the real world kicks in. All of the assumptions and knowledge gaps that were implicitly influencing the engineers working in phase 2) are now exposed as other people try to take the result and roll it into production, get it through acceptance, sign it off, use it for real etc.</p>
-
-<p>Traps here include</p>
-
-<p>D) expecting the engineers that did phase 2) to deal with phase 3) - it's unlikely that they'll be effective at exposing their own blind spots and assumptions.
-E) assuming that this phase will take less effort than the one before it</p>
-
-<h3>Notes</h3>
-
+<p>So for any given tool/process, maybe:</p>
 <ul>
-<li>We are not assuming that all pieces of work go through all phases</li>
-<li>When working on R&amp;D or ENGINEERING we still need to consider that PRODUCTION may/will happen later, and ensure the results of that thinking are recorded and passed on in an effective way.</li>
-<li>It will not always be possible to separate the work this way - however explicitly clarifying which phase an activity fits into should help to establish what needs doing, and how the job should be approached.</li>
+<li>people are unaware of it, unable to find it, or unable to login to it</li>
+<li>people do not understand it</li>
+<li>people think it is broken, inefficient, over-complicated or not applicable</li>
+<li>it is <strong>actually broken, inefficient, over-complicated or not applicable</strong></li>
 </ul>
-
-<p>Finally, note that work done when we focus on real delivery may expose deep misunderstandings and/or issues which invalidate much or all of the previous effort. So remember "Code less. Every line creates a work chain. Code is a liability, not an asset"</p>
+<p>That’s a whole set of potential blockers which can cause people to
+conclude that</p>
+<p><strong>...the right thing is to ignore the specified tool/process</strong>. </p>
+<p>If we want people to actually follow our guidance, we need to remove all the
+blockers. So I suggest that any tool/process we specify/recommend needs to
+satisfy all the following:</p>
+<ul>
+<li>easily discoverable; it is obvious how and where to find it</li>
+<li>easy to understand and well documented; fast learners can figure most of it out
+for themselves</li>
+<li>accessible with minimum friction e.g. no waiting hours/days/weeks for a login</li>
+<li>works as described, and is generally applicable, efficient and fit for purpose</li>
+</ul>
+<p>Maybe we should stick to pushing only 
+<strong>the tools and processes we actually use ourselves.</strong></p>
 
 
 

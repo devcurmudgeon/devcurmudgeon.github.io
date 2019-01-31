@@ -4,7 +4,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>devcurmudgeon</title>
+    <title>Measuring MAKEFLAGS -j performance</title>
 
     <link rel="stylesheet" href="/theme/css/normalize.css" />
     <link rel="stylesheet" href="/theme/css/foundation.min.css" />
@@ -42,9 +42,49 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-<ul class="circle">
-	<li><a href="category/misc.html">misc</a></li>
-</ul>
+<article>
+    <header>
+        <h3 class="article-title"><a href="/measuring-makeflags-j-performance.html" rel="bookmark"
+        title="Permalink to Measuring MAKEFLAGS -j performance">Measuring MAKEFLAGS -j performance</a></h3>
+    </header>
+
+<h6 class="subheader" title="2019-01-31T00:00:00+01:00">Thu 31 January 2019
+</h6>
+
+
+    <p>A few years ago, while working on software build tooling, I needed to work out
+what was the optimal setting for parallelising make/compile instructions.</p>
+<p>Using some 64-core AWS machines I plotted what happened for building some
+large projects using different settings for MAKEFLAGS -j. The results were
+interesting, for example:</p>
+<p><img src=/images/qtwebkit.png>
+<img src=/images/gcc.png></p>
+<p>For machines with up to 8 cores, I concluded that it makes sense to set</p>
+<p><code>-j = number_of_cores</code></p>
+<p>Once we're beyond 8-10 cores, though, the law of diminishing returns set in,
+so it seemed (and still seems) to me that we'd be better off using the extra
+cores for other work.</p>
+<div class="highlight"><pre><span></span>    if &#39;max-jobs&#39; not in config:
+        config[&#39;max-jobs&#39;] = cpu_count()
+
+    if &#39;instances&#39; not in config:
+        # based on some testing (mainly on AWS), maximum effective
+        # max-jobs value seems to be around 8-10 if we have enough cores
+        # users should set values based on workload and build infrastructure
+        # FIXME: more testing :)
+        if cpu_count() &gt;= 10:
+            config[&#39;instances&#39;] = 1 + (cpu_count() / 10)
+            config[&#39;max-jobs&#39;] = cpu_count() / config[&#39;instances&#39;]
+</pre></div>
+
+
+<p>For the the general case, I'm told I should have also looked at memory
+bandwidth and number of independent memory channels, so ymmv.</p>
+
+
+
+
+</article>
     </div>
     <!-- End Main Content -->
 

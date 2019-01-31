@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Tools FTW</title>
+
+    <link rel="stylesheet" href="/theme/css/normalize.css" />
+    <link rel="stylesheet" href="/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="/theme/css/style.css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" />	
+    <script src="/theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="">devcurmudgeon</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="/tools-ftw.html" rel="bookmark"
+        title="Permalink to Tools FTW">Tools FTW</a></h3>
+    </header>
+
+<h6 class="subheader" title="2019-01-31T00:00:00+01:00">Thu 31 January 2019
+</h6>
+
+
+    <p>It's a long time since I wrote the "People vs Processes and Tools" article.
+Apart from being busy with other things, the main reason I don't write very
+much here is that my criteria are:</p>
+<ul>
+<li>cover something that I really feel driven to assert in public</li>
+<li>include something new/innovative/challenging, that isn't widely understood</li>
+<li>stand the test of time, i.e. hopefully still be valid in a decade</li>
+</ul>
+<p>Suprisingly the main thing I feel compelled to write now is
+another salvo at the "People, Processes, Tools" dogma, which has been  been
+thrown at me a lot over the last couple of years, mostly as a magic spell to
+thwart my reasoning or recommendations about a specific tool or set of tools. </p>
+<p>In other words, the underlying message folks try to send me is...</p>
+<p><i>"You're wrong to even be thinking about the tool(s) at this point. We
+need to figure out the team and organisation first, then establish the
+processes that matter... and then will be the time to choose the tools."</i></p>
+<p>My internal monolog takes this further...</p>
+<p><i>"...And by then, Paul, you'll no longer be one of the People involved.
+And in any case we'll have established Processes that you would either refuse,
+or fail, to follow. </p>
+<p>And just to completely box this off, we'll be choosing a <strong>different tool</strong>,
+that you don't like, to demonstrate how wrong you were.</p>
+<p>And then we'll make sure you aren't one of the People that can access it."</i></p>
+<p>AFAIK the <strong>People &gt; Processes &gt; Tools</strong> ordering was originally cited as part of
+the Six Sigma approach. It  may be fantastic in that context - I have no
+idea. But for large scale software work, particularly in established
+organisations, it seems largely irrelevant to me.</p>
+<p>For a start, there aren't many effective levers we can pull with <strong>People</strong>: </p>
+<ul>
+<li>lead, manage, incentivise</li>
+<li>environment factors</li>
+<li>educate/train</li>
+<li>hire</li>
+<li>fire</li>
+</ul>
+<p>Without adequate leadership, management, incentives and environment the
+other factors don't actually get us very far. </p>
+<p>If we have the wrong people leading, no amount of education/training will help.
+Inadequate managers will struggle to even recognise, let alone hire
+the right people. And firing established staff is normally surprisingly
+stressful and difficult.  </p>
+<p>Most of the Processes I've ever seen documented were at least in part</p>
+<ul>
+<li>unworkable or in practice, and/or</li>
+<li>widely unused and ignored and/or</li>
+<li>not relevant to the actual objectives of their organisation </li>
+</ul>
+<p>People who define processes without understanding both the details of the
+actual work, and the stakeholder objectives and values, will typically produce
+bad processes. Ironically, these documents will often be described as
+"Quality Processes".</p>
+<p><strong>So what's the answer?</strong></p>
+<p>Based on some decades of <s>failure</s> experience, I'd like to describe an alternative:</p>
+<p><strong>Philosophy =&gt; Key People =&gt; Tools and Environment =&gt; More People =&gt; Process</strong></p>
+<p><strong>Philosophy:</strong> let's make sure that we're as clear as we can be about what is
+the best/right work to do, before we start. This is where we need
+to get our principles, intentions and objectives straight. We'll need to
+adapt/improvise as we go, but doing the thinking to establish the fundamentals early can avoid a huge amount of waste and grief later.</p>
+<p><strong>Key People:</strong> now onboard the (excellent, small, core) set of Key People,
+selected for their knowledge and ability, to lead/drive/implement the initial
+phase, which will be...</p>
+<p><strong>Tools and Environment:</strong> choose the best Tools for the work, and set them up
+in an Environment which</p>
+<ul>
+<li>is dogfooded (used and tested by the Key People)</li>
+<li>is reliable, reproducible, backed up etc</li>
+<li>causes minimal friction for the work</li>
+<li>is locked down so normal users working in good faith can't actually break
+  anything</li>
+<li>has appropriate gates for review/quality/validation/signoff (but note that
+  gates can cause bottlenecks and friction)</li>
+<li>is simple and obvious for users who are competent and experienced in the work</li>
+<li>is self-service (minimal handover/wait-steps) so users can get on with their
+  jobs</li>
+<li>provides enough basic documentation for new users to get going quickly</li>
+<li>provides immediate and correct feedback from user actions so that
+  problems and documentation can be improved quickly and effectively</li>
+<li>collects and maintains evidence about the work done</li>
+</ul>
+<p><strong>More People:</strong> Onboard the rest of the team, preferably in phases, and:</p>
+<ul>
+<li>fix the problems they encounter</li>
+<li>document the things they find confusing or unclear</li>
+<li>measure the bottlenecks and do everything practical to reduce them and
+  increase overall throughput</li>
+</ul>
+<p>Once this is working, the remaining step is...</p>
+<p><strong>Process:</strong> Now that everything is running, we can relatively easily document
+what the actual processes are.</p>
+<p>However, this may not actually be worth doing:</p>
+<ul>
+<li>we already have appropriate tools for the job, in a low-friction environment</li>
+<li>we already have with evidence of appropriate reviews/approvals and outputs</li>
+<li>we are already measuring our throughput and reducing bottlenecks</li>
+</ul>
+<p>Apparently this reasoning makes me philosophically incompatible
+with some audit-driven organisations.</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+
+        <h5 class="sidebar-title">Stuff</h5>
+        <ul class="side-nav">
+            <li><a href="http://codethink.com/">codethink</a></li>
+            <li><a href="http://wiki.baserock.org/">baserock</a></li>
+            <li><a href="http://twitter.com/devcurmudgeon">twitter</a></li>
+            <li><a href="http://github.com/devcurmudgeon">github</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Posts</h5>
+<table class="table-archive">
+    <tbody>
+        <tr>
+        <td><a href='tools-ftw.html'>Tools FTW</a></td>
+        </tr>
+        <tr>
+        <td><a href='people-vs-processes-and-tools.html'>People vs Processes and Tools</a></td>
+        </tr>
+        <tr>
+        <td><a href='who-can-we-trust-for-software.html'>Who can we trust for software?</a></td>
+        </tr>
+        <tr>
+        <td><a href='the-dalton-cycle.html'>The Dalton Cycle</a></td>
+        </tr>
+        <tr>
+        <td><a href='trustable-software-help-wanted.html'>Trustable Software - Help Wanted!</a></td>
+        </tr>
+        <tr>
+        <td><a href='are-we-there-yet.html'>Are we there yet?</a></td>
+        </tr>
+        <tr>
+        <td><a href='technical-debt-for-whole-systems.html'>Technical debt for whole systems</a></td>
+        </tr>
+        <tr>
+        <td><a href='software-engineering-as-legitimate-engineering-discipline.html'>Software Engineering As Legitimate Engineering Discipline</a></td>
+        </tr>
+        <tr>
+        <td><a href='why-should-genivi-members-contribute-again.html'>Why Should GENIVI Members Contribute, Again?</a></td>
+        </tr>
+        <tr>
+        <td><a href='leading-tools-in-genivi.html'>Leading Tools in GENIVI</a></td>
+        </tr>
+        <tr>
+        <td><a href='three-times-done.html'>Three Times Done</a></td>
+        </tr>
+        <tr>
+        <td><a href='refactoring-is-an-anti-pattern.html'>Refactoring is an anti-pattern</a></td>
+        </tr>
+        <tr>
+        <td><a href='what-does-bsp-stand-for.html'>What does "BSP" stand for?</a></td>
+        </tr>
+        <tr>
+        <td><a href='the-worst-metric.html'>The Worst Metric</a></td>
+        </tr>
+        <tr>
+        <td><a href='the-software-commandments.html'>The software commandments</a></td>
+        </tr>
+        <tr>
+        <td><a href='the-best-revenge.html'>The best revenge...</a></td>
+        </tr>
+        <tr>
+        <td><a href='i-predict-the-future-of-embedded-linux.html'>I predict the future of embedded Linux</a></td>
+        </tr>
+        <tr>
+        <td><a href='i-believe-in-aeroplanes.html'>I believe in aeroplanes</a></td>
+        </tr>
+        <tr>
+        <td><a href='devcurmudgeon.html'>devcurmudgeon</a></td>
+        </tr>
+        <tr>
+        <td><a href='el-reg-not-your-grandads-project-management.html'>El Reg "not your grandad's project management"</a></td>
+        </tr>
+        <tr>
+        <td><a href='my-briefcase-is-older-than-you.html'>My briefcase is older than you</a></td>
+        </tr>
+        <tr>
+        <td><a href='picking-a-fight.html'>Picking a fight...</a></td>
+        </tr>
+        <tr>
+        <td><a href='musical-differences.html'>Musical differences...</a></td>
+        </tr>
+        <tr>
+        <td><a href='open-sores.html'>Open Sores</a></td>
+        </tr>
+        <tr>
+        <td><a href='i-dont-like-your-code.html'>I don't like your code...</a></td>
+        </tr>
+        <tr>
+        <td><a href='apple-vs-contortionists-redux.html'>Apple vs Contortionists redux</a></td>
+        </tr>
+        <tr>
+        <td><a href='software-chaos-ridiculously-under-managed.html'>Software Chaos Ridiculously Under Managed</a></td>
+        </tr>
+        <tr>
+        <td><a href='emperors-new-scrum-iteration-1.html'>Emperor's New Scrum... iteration 1</a></td>
+        </tr>
+        <tr>
+        <td><a href='on-time-and-on-budget-yeah-right.html'>On time and on budget - yeah right!</a></td>
+        </tr>
+        <tr>
+        <td><a href='extreme-programming-80s-style-epic-fail.html'>Extreme programming 80s style - epic fail</a></td>
+        </tr>
+        <tr>
+        <td><a href='some-background.html'>Some background...</a></td>
+        </tr>
+    </tbody>
+</table>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>devcurmudgeon by devcurmudgeon</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

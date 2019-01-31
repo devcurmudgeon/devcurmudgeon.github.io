@@ -46,56 +46,39 @@
         
 
             <article>
-                <a href="/why-should-genivi-members-contribute-again.html"><h3 class="article-title">Why Should GENIVI Members Contribute, Again?</h3></a>
-<h6 class="subheader" title="2015-06-23T00:00:00+02:00">Tue 23 June 2015
+                <a href="/measuring-makeflags-j-performance.html"><h3 class="article-title">Measuring MAKEFLAGS -j performance</h3></a>
+<h6 class="subheader" title="2019-01-31T00:00:00+01:00">Thu 31 January 2019
 </h6>
 
 
-<p>GENIVI Members need to make attractive, useful software to run reliably in cars for a long time. The amount of software needed is increasing faster than our capacity to bring in extra engineers, and our ability to increase the productivity of the engineers already engaged. Given the economics, automotive organizations tend to favor reuse of existing solutions, since this usually leads to shorter timescales, lower costs and higher reliability.</p>
-<p>Looking broadly across industries, many organizations and engineers have concluded that the most effective long-term approach for software reuse is Free and Open Source Software (FOSS). It's hard to beat a "license fee" of zero, for solutions that are already being used in a wide range of environments.</p>
-<p>In some industries, working with FOSS is a well-trodden path. Major vendors have been using open source for solutions for enterprise, telecoms and mobile for a very long time and have reached some conclusions about what works best. I think the automotive industry is still learning what works best for automotive use cases.</p>
-<p>To be fair, automotive is really a rather difficult industry, with many demanding constraints: very long product lifetimes, very high reliability and safety requirements, extreme competition on features and price. And the situation is not helped by the dramatic rise in the sheer volume of software required in automotive products over the last few years, leading to levels of engineering cost and complexity way beyond the experience of most automotive decision-makers.</p>
-<p>I think GENIVI's core challenge is to help its community bridge the knowledge gap, to make best use of what engineers and managers have learned already in other industries. And the "crack in the foundation" is simply that the automotive industry as a whole doesn't yet believe, in its bones, that collaboration and sharing is the best way to deliver in-vehicle software.  Some organizations are hopeful, others are interested, others are running pilot programs, and some are in production, but very few are completely committed to the open source road so far.</p>
-<p>I'll digress slightly and mention that the Consumer Electronics Linux Forum recently conducted a survey of member engineers to understand what the day-to-day barriers are that stop them from contributing within the open source community. The answers are enlightening, and highly relevant to what we see in the trenches in GENIVI. I'll rephrase the words to make the general point, and attempt to clarify so it makes sense in the automotive context specifically. See https://lwn.net/Articles/647524/ for the original article (available to LWN subscribers.)</p>
-<ol>
-<li>
-<p><b>Developing against an old version of the software</b> (54%)
-For example, Fred is working on a GENIVI stack from two years ago - patches offered upstream would probably not be useful.</p>
-</li>
-<li>
-<p><b>Work depends on proprietary code</b> (50%)
-The work can't be made public.</p>
-</li>
-<li>
-<p><b>It's too hard</b> (45%)
-For example, internal IT makes it difficult to collaborate in the open or follow the contribution process.</p>
-</li>
-<li>
-<p><b>Unable to test</b> (41%)
-The system Fred is working on is so different from the mainline, it's not clear that any contributions would even work for other teams.</p>
-</li>
-<li>
-<p><b>Employer does not allow time</b> (40%)
-Because contribution is not seen to be commercially justified.</p>
-</li>
-<li>
-<p><b>Patch not good enough</b> (35%)
-Perhaps because the current deadlines are so urgent Fred has no time or budget to improve it.</p>
-</li>
-<li>
-<p><b>Afraid of rejection</b> (33%)
-Aren't we all?</p>
-</li>
-</ol>
-<p>Broadly this all boils down to <i>"unless you proactively work with the upstream community, you are unlikely to be contributing patches. Your work is probably not relevant enough or of sufficient quality to be accepted by upstream even if you do try to contribute it."</i>  So the result is that you don't contribute, thus avoiding the cost, pain and time involved in "working with upstream." This makes perfect commercial sense during development, with deadlines looming.</p>
-<p>Until you realize that your colleagues will need to maintain the software for a very long time, completely adrift from the various upstream teams that developed it. <b>Maintaining 100 million lines of code on your own is not much fun, and surprisingly expensive.</b></p>
-<p>Automotive has over a century of experience in measuring and improving engineering cost, efficiency and reliability. Software is notoriously hard to measure in detail, but over the long term the clear signals to look at will be:</p>
-<ul>
-<li>total cost of software engineering (in-house and subcontract, development and maintenance) over the lifetime of the product.</li>
-<li>customer complaints, recalls, security breaches and collateral damage.</li>
-</ul>
-<p>Unfortunately, we don't yet have clear proof that working in the open and collaborating on solutions over the long-term has delivered better products for automotive at lower cost. It's simply too early to tell.  The numbers aren't in yet. </p>
-<p>But personally I think the evidence from other industries is overwhelming. I know I'm not alone.</p>
+<p>A few years ago, while working on software build tooling, I needed to work out
+what was the optimal setting for parallelising make/compile instructions.</p>
+<p>Using some 64-core AWS machines I plotted what happened for building some
+large projects using different settings for MAKEFLAGS -j. The results were
+interesting, for example:</p>
+<p><img src=/images/qtwebkit.png>
+<img src=/images/gcc.png></p>
+<p>For machines with up to 8 cores, I concluded that it makes sense to set</p>
+<p><code>-j = number_of_cores</code></p>
+<p>Once we're beyond 8-10 cores, though, the law of diminishing returns set in,
+so it seemed (and still seems) to me that we'd be better off using the extra
+cores for other work.</p>
+<div class="highlight"><pre><span></span>    if &#39;max-jobs&#39; not in config:
+        config[&#39;max-jobs&#39;] = cpu_count()
+
+    if &#39;instances&#39; not in config:
+        # based on some testing (mainly on AWS), maximum effective
+        # max-jobs value seems to be around 8-10 if we have enough cores
+        # users should set values based on workload and build infrastructure
+        # FIXME: more testing :)
+        if cpu_count() &gt;= 10:
+            config[&#39;instances&#39;] = 1 + (cpu_count() / 10)
+            config[&#39;max-jobs&#39;] = cpu_count() / config[&#39;instances&#39;]
+</pre></div>
+
+
+<p>For the the general case, I'm told I should have also looked at memory
+bandwidth and number of independent memory channels, so ymmv.</p>
 
 
             </article>
@@ -108,13 +91,184 @@ Aren't we all?</p>
 
 
             <article>
+                <a href="/tools-vs-processes-and-people-again.html"><h3 class="article-title">Tools vs Processes and People (again)</h3></a>
+<h6 class="subheader" title="2018-07-05T00:00:00+02:00">Thu 05 July 2018
+</h6>
+
+
+<p>It's a year since I wrote the "People vs Processes and Tools" article. Apart
+from being busy with other things, the main reason I don't write very much
+here is that my criteria for a post are:</p>
+<ul>
+<li>cover something that I want (or need) to assert in public</li>
+<li>include something …</li></ul>
+
+
+                <a class="button radius secondary small right" href="/tools-vs-processes-and-people-again.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="/people-vs-processes-and-tools.html"><h3 class="article-title">People vs Processes and Tools</h3></a>
+<h6 class="subheader" title="2017-07-10T00:00:00+02:00">Mon 10 July 2017
+</h6>
+
+
+<p>I recently attended a demo of a software tool for <em>requirements management</em>.
+After a few minutes showing the menus and screens, the demo became a
+presentation of a slide deck <em>about</em> the software.</p>
+<p>It turned out that the engineer demonstrating the tool does not use it himself.
+His weapon of …</p>
+
+
+                <a class="button radius secondary small right" href="/people-vs-processes-and-tools.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="/who-can-we-trust-for-software.html"><h3 class="article-title">Who can we trust for software?</h3></a>
+<h6 class="subheader" title="2016-09-15T00:00:00+02:00">Thu 15 September 2016
+</h6>
+
+
+<p><img src=/images/role-landscape.png /></p>
+<p><strong> TL; DR We need to figure out how to guarantee that software can be trusted </strong></p>
+<p>In the over-simple graphic above, I've tried to map some of the key technical
+roles being performed in the delivery and maintenance of complex systems and
+services. I'm struggling to work out who precisely sits …</p>
+
+
+                <a class="button radius secondary small right" href="/who-can-we-trust-for-software.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="/the-dalton-cycle.html"><h3 class="article-title">The Dalton Cycle</h3></a>
+<h6 class="subheader" title="2016-07-29T00:00:00+02:00">Fri 29 July 2016
+</h6>
+
+
+<p><img src=/images/dalton-cycle.jpg /></p>
+<p>Thanks to Niall Dalton for this comment at the end of his post on <a href="https://lists.trustable.io/pipermail/trustable-software/2016-July/000023.html">the trustable-software list</a></p>
+<p>"I go off on this tangent to raise the whole bucket of pain involved in building a trustworthy system like this. Not that we necessarily want to try to build a 100% trustworthy …</p>
+
+
+                <a class="button radius secondary small right" href="/the-dalton-cycle.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="/trustable-software-help-wanted.html"><h3 class="article-title">Trustable Software - Help Wanted!</h3></a>
+<h6 class="subheader" title="2016-06-14T00:00:00+02:00">Tue 14 June 2016
+</h6>
+
+
+<p>For a whole load of reasons I think we need to get to trustable software, and
+would appreciate comments and suggestions, preferably on the
+<a href="https://lists.trustable.io/cgi-bin/mailman/listinfo/trustable-software">mailing list</a>,
+which is public.</p>
+<p>Note, I'm not "marketing" or "selling" anything here. 
+The aim is to trigger interest in a cross-industry set of grown-up engineers …</p>
+
+
+                <a class="button radius secondary small right" href="/trustable-software-help-wanted.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="/are-we-there-yet.html"><h3 class="article-title">Are we there yet?</h3></a>
+<h6 class="subheader" title="2016-04-16T00:00:00+02:00">Sat 16 April 2016
+</h6>
+
+
+<p>Many large projects are late. Most of the time the the actual journey turns
+out to be much harder and much longer than it looked when we started out.</p>
+<p>From a management perspective we are constantly looking for validation that
+we're hitting the plan, whether it's traditional milestones and deliverables …</p>
+
+
+                <a class="button radius secondary small right" href="/are-we-there-yet.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="/technical-debt-for-whole-systems.html"><h3 class="article-title">Technical debt for whole systems</h3></a>
+<h6 class="subheader" title="2016-03-19T00:00:00+01:00">Sat 19 March 2016
+</h6>
+
+
+<p><b>"It ain't what you don't know that gets you into trouble. It's what you know for sure that just ain't so."</b> [Mark Twain]</p>
+<p>If you've been in involved in large-scale software projects over the last few
+decades you've probably learned the hard way that upgrading the platform (operating system, libraries …</p>
+
+
+                <a class="button radius secondary small right" href="/technical-debt-for-whole-systems.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="/software-engineering-as-legitimate-engineering-discipline.html"><h3 class="article-title">Software Engineering As Legitimate Engineering Discipline</h3></a>
+<h6 class="subheader" title="2016-01-20T00:00:00+01:00">Wed 20 January 2016
+</h6>
+
+
+<p>For 2016 I've decided it's time I take my public communications seriously.</p>
+<p>Perhaps some of my customers and colleagues realize that my previous attempts at wit are born from decades of struggle on difficult software projects. </p>
+<p>But most of the internet has no idea who I am, and my previous …</p>
+
+
+                <a class="button radius secondary small right" href="/software-engineering-as-legitimate-engineering-discipline.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="/why-should-genivi-members-contribute-again.html"><h3 class="article-title">Why Should GENIVI Members Contribute, Again?</h3></a>
+<h6 class="subheader" title="2015-06-23T00:00:00+02:00">Tue 23 June 2015
+</h6>
+
+
+<p>GENIVI Members need to make attractive, useful software to run reliably in cars for a long time. The amount of software needed is increasing faster than our capacity to bring in extra engineers, and our ability to increase the productivity of the engineers already engaged. Given the economics, automotive organizations …</p>
+
+
+                <a class="button radius secondary small right" href="/why-should-genivi-members-contribute-again.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="/leading-tools-in-genivi.html"><h3 class="article-title">Leading Tools in GENIVI</h3></a>
 <h6 class="subheader" title="2015-05-02T00:00:00+02:00">Sat 02 May 2015
 </h6>
 
 
 <p>I've had a stormy relationship with the automotive industry - love-hate doesn't begin to cover it.</p>
-<p>It's not that I'm a car guy - I can barely manage an oil change. But cars these days contain a staggering amount of software. And in spite of what some may ...</p>
+<p>It's not that I'm a car guy - I can barely manage an oil change. But cars these days contain a staggering amount of software. And in spite of what some may say, I am a …</p>
 
 
                 <a class="button radius secondary small right" href="/leading-tools-in-genivi.html">Read More</a>
@@ -136,7 +290,7 @@ Aren't we all?</p>
 <li>the work has been checked in to the VCS</li>
 <li>it builds ok</li>
 <li>the automated tests pass</li>
-<li>documentation ...</li></ul>
+<li>documentation …</li></ul>
 
 
                 <a class="button radius secondary small right" href="/three-times-done.html">Read More</a>
@@ -155,7 +309,7 @@ Aren't we all?</p>
 <p>I thought I'd written <em>more</em> than enough words on <a href="http://www.devcurmudgeon.com/i-dont-like-your-code">refactoring</a> already, but maybe I was too cryptic. </p>
 <p>So here's my version 2.</p>
 <p>Let's start by noting that most of the folks who claim that they are 'refactoring' don't actually know what it means.</p>
-<p>I, on the ...</p>
+<p>I, on the other hand, found the …</p>
 
 
                 <a class="button radius secondary small right" href="/refactoring-is-an-anti-pattern.html">Read More</a>
@@ -175,7 +329,7 @@ Aren't we all?</p>
 <p>Some folks think BSP stands for "Board Support Package". </p>
 <p>But, as with <a href="http://www.devcurmudgeon.com/2010/08/28/software-chaos-ridiculously-under-managed/">SCRUM</a>, the popular view is wrong.</p>
 <p>In the real world, BSP means <b>Bull Shit Project</b>.</p>
-<p>BSPs are ...</p>
+<p>BSPs are …</p>
 
 
                 <a class="button radius secondary small right" href="/what-does-bsp-stand-for.html">Read More</a>
@@ -192,7 +346,7 @@ Aren't we all?</p>
 
 
 <p>Lines Of Code is an awful way to measure software - but look at the pretty picture...</p>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/a/codethink.co.uk/spreadsheet/tq?key=0Aiph3VJv3myMdFBaZTNKUDNFeFVWa3pjY2M3ZlI4dnc&transpose=0&headers=0&range=D2%3AE158&gid=6&pub=1","options":{"titleTextStyle":{"bold":true,"color":"#000","fontSize":16},"animation":{"duration":500 ...</script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/static/modules/gviz/1.0/chart.js"> {"dataSourceUrl":"//docs.google.com/a/codethink.co.uk/spreadsheet/tq?key=0Aiph3VJv3myMdFBaZTNKUDNFeFVWa3pjY2M3ZlI4dnc&transpose=0&headers=0&range=D2%3AE158&gid=6&pub=1","options":{"titleTextStyle":{"bold":true,"color":"#000","fontSize":16},"animation":{"duration":500 …</script>
 
 
                 <a class="button radius secondary small right" href="/the-worst-metric.html">Read More</a>
@@ -212,7 +366,7 @@ Aren't we all?</p>
 <p>I accept short timeboxed sprints. </p>
 <p>Agreed definition of DONE - great.</p>
 <p>Prioritised list of requirements - awesome.</p>
-<p>Daily standups - fine if you are all in the same room, and you stick to the rules ...</p>
+<p>Daily standups - fine if you are all in the same room, and you stick to the rules …</p>
 
 
                 <a class="button radius secondary small right" href="/the-software-commandments.html">Read More</a>
@@ -231,7 +385,7 @@ Aren't we all?</p>
 <p>Over the years I've worked with many amazing people, but from time to time I've also had to deal with some <strike>complete assholes</strike> unpleasantness. </p>
 <p>Frankly it's amazing at how downright dishonest, manipulative and plain stupid some folks can be. </p>
 <p>Actually plain stupid applies to me too. </p>
-<p>I ...</p>
+<p>I've been repeatedly robbed …</p>
 
 
                 <a class="button radius secondary small right" href="/the-best-revenge.html">Read More</a>
@@ -249,7 +403,7 @@ Aren't we all?</p>
 
 <p>I've been reading the excellent <i>Future Babble</i> by Dan Gardner. </p>
 <p>Perhaps unsurprisingly, it confirms that we're all wired as <b>complete idiots</b> when it comes to looking into the future.</p>
-<p>The science shows that the more confidently someone makes a prediction, the more likely they're talking utter balls ...</p>
+<p>The science shows that the more confidently someone makes a prediction, the more likely they're talking utter balls. But sadly, it …</p>
 
 
                 <a class="button radius secondary small right" href="/i-predict-the-future-of-embedded-linux.html">Read More</a>
@@ -266,7 +420,7 @@ Aren't we all?</p>
 
 
 <p>After a typically <strike>ignored</strike> secretive softlaunch, I'm finally taking the wraps off devcurmudgeon. The idea is to be funny, incisive... and maybe change the world one <strike>hacker</strike> software developer at a time. But I'm not optimistic. This project may fail, like so many others :-) </p>
-<p>Mostly I expect to ...</p>
+<p>Mostly I expect to be ranting …</p>
 
 
                 <a class="button radius secondary small right" href="/devcurmudgeon.html">Read More</a>
@@ -287,7 +441,7 @@ Aren't we all?</p>
 <iframe src="http://prezi.com/embed/h_9qjmqiql1y/?bgcolor=ffffff&amp;lock_to_path=1&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" width="550" height="400" frameBorder="0"></iframe>
 
 <p>But the exercise was not entirely a waste of time.</p>
-<p>A spot of ...</p>
+<p>A spot of …</p>
 
 
                 <a class="button radius secondary small right" href="/my-briefcase-is-older-than-you.html">Read More</a>
@@ -305,7 +459,7 @@ Aren't we all?</p>
 
 <p>Maybe I'm alone on this one ... but aren't Open Source and Agile pretty much directly opposed?</p>
 <p>Agile = 5-9 people in a team, locked up together, everything thrashed out in face-to-face conversations, daily standups, timeboxed iterative deliveries.</p>
-<p>Open Source = no fixed team size, distributed around the world, everything thrashed ...</p>
+<p>Open Source = no fixed team size, distributed around the world, everything thrashed out via …</p>
 
 
                 <a class="button radius secondary small right" href="/picking-a-fight.html">Read More</a>
@@ -323,7 +477,7 @@ Aren't we all?</p>
 
 <p>I used to be in a band, when I still had enough hair for a stupid haircut.</p>
 <p>We had real instruments. None of this electronic bleepy noises nonsense. We used to lug huge amplifiers everywhere, because the guitars always had to be loud enough to shake the building.</p>
-<p>Whereas the ...</p>
+<p>Whereas the …</p>
 
 
                 <a class="button radius secondary small right" href="/musical-differences.html">Read More</a>
@@ -342,7 +496,7 @@ Aren't we all?</p>
 <p>I need to get with the program. All these years working on secret projects with someone else's name on the mastheads have created an obvious problem - nobody knows who the hex I am.</p>
 <p>But wait!</p>
 <p>There's an obvious solution too.</p>
-<p>Why don't I just take my old ...</p>
+<p>Why don't I just take my old <strike>spaghetti</strike> code -  all …</p>
 
 
                 <a class="button radius secondary small right" href="/open-sores.html">Read More</a>
@@ -381,7 +535,7 @@ Aren't we all?</p>
 <p>Wanna hear? Of course you do... you too could make gazillions... but you've got to promise not to tell anybody else. </p>
 <p>It goes like this...</p>
 <ol>
-<li>Three independent design teams ...</li></ol>
+<li>Three independent design teams produce mockups …</li></ol>
 
 
                 <a class="button radius secondary small right" href="/apple-vs-contortionists-redux.html">Read More</a>
@@ -399,7 +553,7 @@ Aren't we all?</p>
 
 <p>So this post is just a place-holder for me to launch my new methodology - SCRUM.</p>
 <p>I'd hate to have some fan copy my ideas (again) and find myself unable to prove categorically that I thought it first, so here goes...</p>
-<p>Google tells me (so it must be true) that ...</p>
+<p>Google tells me (so it must be true) that no-one …</p>
 
 
                 <a class="button radius secondary small right" href="/software-chaos-ridiculously-under-managed.html">Read More</a>
@@ -416,7 +570,8 @@ Aren't we all?</p>
 
 
 <p>I've been wading through the literature on Scrum/Agile/Lean/Kanban/Hokey-kokey for months now, and I'm still no nearer to making sense of it...</p>
-<p>How on earth can folks seriously believe that the whole commercial world should turn itself upside down so programmers can have an easy ...</p>
+<p>How on earth can folks seriously believe that the whole commercial world should turn itself upside down so programmers can have an easy life? </p>
+<p>No …</p>
 
 
                 <a class="button radius secondary small right" href="/emperors-new-scrum-iteration-1.html">Read More</a>
@@ -433,7 +588,8 @@ Aren't we all?</p>
 
 
 <p>Developing complex software well is actually very difficult to do.</p>
-<p>Seems to me it requires intelligence way above average, combined with enough pig-headedness to refuse to be defeated by dumb chips and other people's code spitting random error codes at you - often for hours or days at a time ...</p>
+<p>Seems to me it requires intelligence way above average, combined with enough pig-headedness to refuse to be defeated by dumb chips and other people's code spitting random error codes at you - often for hours or days at a time.</p>
+<p>It's …</p>
 
 
                 <a class="button radius secondary small right" href="/on-time-and-on-budget-yeah-right.html">Read More</a>
@@ -450,7 +606,7 @@ Aren't we all?</p>
 
 
 <p>My first brush with programming was on the <a href="http://www.rskey.org/detail.asp?manufacturer=Sinclair&amp;model=Cambridge+Programmable">Sinclair Cambridge Programmable Calculator</a>. A mathematics teacher got me hooked - if I remember well he was later knocked down and killed by a milk float.</p>
-<p>Later I messed about on the <a href="http://en.wikipedia.org/wiki/ZX80">ZX80</a>, <a href="http://en.wikipedia.org/wiki/ZX81">ZX81</a>, <a href="http://en.wikipedia.org/wiki/Sinclair_ZX_Spectrum">ZX Spectrum</a>, and <a href="http://en.wikipedia.org/wiki/Sinclair_QL">Sinclair QL</a> while sailing gracelessly through ...</p>
+<p>Later I messed about on the <a href="http://en.wikipedia.org/wiki/ZX80">ZX80</a>, <a href="http://en.wikipedia.org/wiki/ZX81">ZX81</a>, <a href="http://en.wikipedia.org/wiki/Sinclair_ZX_Spectrum">ZX Spectrum</a>, and <a href="http://en.wikipedia.org/wiki/Sinclair_QL">Sinclair QL</a> while sailing gracelessly through …</p>
 
 
                 <a class="button radius secondary small right" href="/extreme-programming-80s-style-epic-fail.html">Read More</a>
@@ -493,6 +649,33 @@ Aren't we all?</p>
         <h5 class="sidebar-title">Posts</h5>
 <table class="table-archive">
     <tbody>
+        <tr>
+        <td><a href='measuring-makeflags-j-performance.html'>Measuring MAKEFLAGS -j performance</a></td>
+        </tr>
+        <tr>
+        <td><a href='tools-vs-processes-and-people-again.html'>Tools vs Processes and People (again)</a></td>
+        </tr>
+        <tr>
+        <td><a href='people-vs-processes-and-tools.html'>People vs Processes and Tools</a></td>
+        </tr>
+        <tr>
+        <td><a href='who-can-we-trust-for-software.html'>Who can we trust for software?</a></td>
+        </tr>
+        <tr>
+        <td><a href='the-dalton-cycle.html'>The Dalton Cycle</a></td>
+        </tr>
+        <tr>
+        <td><a href='trustable-software-help-wanted.html'>Trustable Software - Help Wanted!</a></td>
+        </tr>
+        <tr>
+        <td><a href='are-we-there-yet.html'>Are we there yet?</a></td>
+        </tr>
+        <tr>
+        <td><a href='technical-debt-for-whole-systems.html'>Technical debt for whole systems</a></td>
+        </tr>
+        <tr>
+        <td><a href='software-engineering-as-legitimate-engineering-discipline.html'>Software Engineering As Legitimate Engineering Discipline</a></td>
+        </tr>
         <tr>
         <td><a href='why-should-genivi-members-contribute-again.html'>Why Should GENIVI Members Contribute, Again?</a></td>
         </tr>
